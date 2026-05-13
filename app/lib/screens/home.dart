@@ -144,11 +144,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    CircleAvatar(
-                      radius: 22,
-                      backgroundColor: Colors.white,
-                      backgroundImage: const NetworkImage(
-                        'https://i.pravatar.cc/150?img=12',
+                    Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: ClipOval(
+                        child: Image.network(
+                          'https://i.pravatar.cc/150?img=12',
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => const Icon(Icons.person, size: 22),
+                        ),
                       ),
                     ),
                   ],
