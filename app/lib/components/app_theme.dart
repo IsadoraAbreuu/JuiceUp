@@ -13,7 +13,7 @@ class AppTheme {
       fontFamily: 'Poppins',
       colorScheme: colorScheme,
       useMaterial3: true,
-      scaffoldBackgroundColor: const Color(0xFFF4FFF8),
+      scaffoldBackgroundColor: Colors.white,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         foregroundColor: Color(0xFF0F172A),

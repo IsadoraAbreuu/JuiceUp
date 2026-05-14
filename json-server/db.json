@@ -1,139 +1,190 @@
 {
   "produtos": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "Suco Verde Detox",
       "descricao": "Mistura refrescante de couve, pepino, maçã verde, gengibre e limão. Perfeito para desintoxicar o organismo e dar energia no começo do dia.",
-      "preco": 14.90,
+      "preco": 14.9,
       "categoria": "detox",
       "imagem": "/images/verde_detox.png",
-      "ingredientes": ["Couve", "Pepino", "Maçã verde", "Gengibre", "Limão"],
+      "ingredientes": [
+        "Couve",
+        "Pepino",
+        "Maçã verde",
+        "Gengibre",
+        "Limão"
+      ],
       "tamanho_ml": 300,
       "disponivel": true,
       "destaque": true,
       "avaliacao": 4.8,
-      "total_avaliacoes": 124
+      "total_avaliacoes": 124,
+      "categoriaId": 1
     },
     {
-      "id": 2,
+      "id": "2",
       "nome": "Suco de Laranja com Cenoura",
       "descricao": "Combinação clássica e cheia de vitamina C e betacaroteno. Ideal para imunidade e pele saudável.",
-      "preco": 11.90,
+      "preco": 11.9,
       "categoria": "vitaminas",
-      "imagem": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600",
-      "ingredientes": ["Laranja", "Cenoura", "Gengibre"],
+      "imagem": "/images/laranja_com_cenoura.png",
+      "ingredientes": [
+        "Laranja",
+        "Cenoura",
+        "Gengibre"
+      ],
       "tamanho_ml": 350,
       "disponivel": true,
       "destaque": true,
       "avaliacao": 4.6,
-      "total_avaliacoes": 98
+      "total_avaliacoes": 98,
+      "categoriaId": 2
     },
     {
-      "id": 3,
+      "id": "3",
       "nome": "Suco de Melancia com Hortelã",
       "descricao": "Suco ultra hidratante e leve, com toque refrescante de hortelã. Ótimo para os dias quentes.",
-      "preco": 12.50,
+      "preco": 12.5,
       "categoria": "refrescante",
-      "imagem": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600",
-      "ingredientes": ["Melancia", "Hortelã", "Limão"],
+      "imagem": "/images/melancia_com_hortela.png",
+      "ingredientes": [
+        "Melancia",
+        "Hortelã",
+        "Limão"
+      ],
       "tamanho_ml": 400,
       "disponivel": true,
       "destaque": false,
       "avaliacao": 4.7,
-      "total_avaliacoes": 75
+      "total_avaliacoes": 75,
+      "categoriaId": 3
     },
     {
-      "id": 4,
+      "id": "4",
       "nome": "Suco de Abacaxi com Coco",
       "descricao": "Sabor tropical incrível com abacaxi fresco e água de coco. Rico em manganês e anti-inflamatório natural.",
-      "preco": 13.90,
+      "preco": 13.9,
       "categoria": "tropical",
       "imagem": "/images/abacaxi_com_coco.png",
-      "ingredientes": ["Abacaxi", "Água de coco", "Hortelã"],
+      "ingredientes": [
+        "Abacaxi",
+        "Água de coco",
+        "Hortelã"
+      ],
       "tamanho_ml": 350,
       "disponivel": true,
       "destaque": true,
       "avaliacao": 4.9,
-      "total_avaliacoes": 210
+      "total_avaliacoes": 210,
+      "categoriaId": 4
     },
     {
-      "id": 5,
+      "id": "5",
       "nome": "Suco de Beterraba com Laranja",
       "descricao": "Poderoso antioxidante e fonte de ferro. Melhora a disposição e a circulação sanguínea.",
-      "preco": 13.50,
+      "preco": 13.5,
       "categoria": "energia",
-      "imagem": "https://images.unsplash.com/photo-1638176066666-ffb2f013c7dd?w=600",
-      "ingredientes": ["Beterraba", "Laranja", "Limão", "Gengibre"],
+      "imagem": "/images/beterraba_com_laranja.png",
+      "ingredientes": [
+        "Beterraba",
+        "Laranja",
+        "Limão",
+        "Gengibre"
+      ],
       "tamanho_ml": 300,
       "disponivel": true,
       "destaque": false,
       "avaliacao": 4.5,
-      "total_avaliacoes": 63
+      "total_avaliacoes": 63,
+      "categoriaId": 5
     },
     {
-      "id": 6,
+      "id": "6",
       "nome": "Suco de Manga com Maracujá",
       "descricao": "A doçura da manga brasileira com o azedinho relaxante do maracujá. Uma combinação irresistível.",
-      "preco": 14.00,
+      "preco": 14,
       "categoria": "tropical",
-      "imagem": "https://images.unsplash.com/photo-1546173159-315724a31696?w=600",
-      "ingredientes": ["Manga", "Maracujá", "Água de coco"],
+      "imagem": "/images/manga_com_maracuja.png",
+      "ingredientes": [
+        "Manga",
+        "Maracujá",
+        "Água de coco"
+      ],
       "tamanho_ml": 350,
       "disponivel": true,
       "destaque": false,
       "avaliacao": 4.7,
-      "total_avaliacoes": 88
+      "total_avaliacoes": 88,
+      "categoriaId": 4
     },
     {
-      "id": 7,
+      "id": "7",
       "nome": "Suco de Goiaba com Laranja",
       "descricao": "Combinação tropical com goiaba vermelha fresca e laranja. Sabor marcante, rico em vitamina C e licopeno.",
-      "preco": 12.90,
+      "preco": 12.9,
       "categoria": "tropical",
-      "imagem": "https://images.unsplash.com/photo-1622597467836-f3e97b832a80?w=600",
-      "ingredientes": ["Goiaba vermelha", "Laranja", "Limão"],
+      "imagem": "/images/goiaba_com_laranja.png",
+      "ingredientes": [
+        "Goiaba vermelha",
+        "Laranja",
+        "Limão"
+      ],
       "tamanho_ml": 350,
       "disponivel": true,
       "destaque": true,
       "avaliacao": 4.7,
-      "total_avaliacoes": 91
+      "total_avaliacoes": 91,
+      "categoriaId": 4
     },
     {
-      "id": 8,
+      "id": "8",
       "nome": "Suco de Uva Integral",
       "descricao": "Suco de uva 100% natural, sem açúcar adicionado. Rico em resveratrol e antioxidantes.",
-      "preco": 15.90,
+      "preco": 15.9,
       "categoria": "antioxidante",
-      "imagem": "https://images.unsplash.com/photo-1596363505729-4190a9506133?w=600",
-      "ingredientes": ["Uva roxa integral"],
+      "imagem": "/images/uva_integral.png",
+      "ingredientes": [
+        "Uva roxa integral"
+      ],
       "tamanho_ml": 300,
       "disponivel": false,
       "destaque": false,
       "avaliacao": 4.4,
-      "total_avaliacoes": 39
+      "total_avaliacoes": 39,
+      "categoriaId": 7
     },
     {
-      "id": 9,
+      "id": "9",
       "nome": "Suco de Morango com Banana",
       "descricao": "Cremoso e naturalmente doce, sem precisar de açúcar. Rico em potássio e vitaminas do complexo B. Ótimo para pré-treino.",
-      "preco": 13.90,
+      "preco": 13.9,
       "categoria": "energia",
       "imagem": "/images/morango_com_banana.png",
-      "ingredientes": ["Morango", "Banana", "Leite de aveia"],
+      "ingredientes": [
+        "Morango",
+        "Banana",
+        "Leite de aveia"
+      ],
       "tamanho_ml": 400,
       "disponivel": true,
       "destaque": true,
       "avaliacao": 4.8,
-      "total_avaliacoes": 156
+      "total_avaliacoes": 156,
+      "categoriaId": 5
     },
     {
-      "id": 10,
+      "id": "10",
       "nome": "Suco Imunidade",
       "descricao": "Blend especial, energizante e anti-inflamatório. Limão siciliano fresco, gengibre ralado e um toque de mel puro. Perfeito para imunidade.",
-      "preco": 10.90,
+      "preco": 10.9,
       "categoria": "imunidade",
       "imagem": "/images/imunidade.png",
-      "ingredientes": ["Limão siciliano", "Gengibre", "Mel", "Água de coco"],
+      "ingredientes": [
+        "Limão siciliano",
+        "Gengibre",
+        "Mel",
+        "Água de coco"
+      ],
       "tamanho_ml": 200,
       "disponivel": true,
       "destaque": false,
@@ -141,43 +192,82 @@
       "total_avaliacoes": 82
     },
     {
-      "id": 11,
+      "id": "11",
       "nome": "Suco de Açaí com Banana",
       "descricao": "Denso, cremoso e cheio de energia. Açaí puro batido com banana madura e um toque de mel. Ideal para pós-treino e disposição o dia todo.",
-      "preco": 17.90,
+      "preco": 17.9,
       "categoria": "energia",
       "imagem": "/images/acai_com_banana.png",
-      "ingredientes": ["Açaí", "Banana", "Mel", "Granola"],
+      "ingredientes": [
+        "Açaí",
+        "Banana",
+        "Mel",
+        "Granola"
+      ],
       "tamanho_ml": 400,
       "disponivel": true,
       "destaque": true,
       "avaliacao": 4.9,
-      "total_avaliacoes": 203
+      "total_avaliacoes": 203,
+      "categoriaId": 5
     },
     {
-      "id": 12,
+      "id": "12",
       "nome": "Suco de Blueberry com Romã",
       "descricao": "Explosão de antioxidantes em cada gole. Blueberry fresco com romã e um toque de limão siciliano. Cor vibrante, sabor marcante e poderoso para a saúde da pele e do coração.",
-      "preco": 18.90,
+      "preco": 18.9,
       "categoria": "antioxidante",
-      "imagem": "https://images.unsplash.com/photo-1615478503562-ec2d8aa0e24e?w=600",
-      "ingredientes": ["Blueberry", "Romã", "Limão siciliano", "Água de coco"],
+      "imagem": "/images/blueberry_com_romã.png",
+      "ingredientes": [
+        "Blueberry",
+        "Romã",
+        "Limão siciliano",
+        "Água de coco"
+      ],
       "tamanho_ml": 300,
       "disponivel": true,
       "destaque": true,
       "avaliacao": 4.9,
-      "total_avaliacoes": 74
+      "total_avaliacoes": 74,
+      "categoriaId": 7
     }
   ],
   "categorias": [
-    { "id": "1", "nome": "Detox", "slug": "detox" },
-    { "id": "2", "nome": "Vitaminas", "slug": "vitaminas"},
-    { "id": "3", "nome": "Refrescante", "slug": "refrescante" },
-    { "id": "4", "nome": "Tropical", "slug": "tropical"},
-    { "id": "5", "nome": "Energia", "slug": "energia" },
-    { "id": "6", "nome": "Imunidade", "slug": "imunidade" },
-    { "id": "7", "nome": "Antioxidante", "slug": "antioxidante"}
+    {
+      "id": "1",
+      "nome": "Detox",
+      "slug": "detox"
+    },
+    {
+      "id": "2",
+      "nome": "Vitaminas",
+      "slug": "vitaminas"
+    },
+    {
+      "id": "3",
+      "nome": "Refrescante",
+      "slug": "refrescante"
+    },
+    {
+      "id": "4",
+      "nome": "Tropical",
+      "slug": "tropical"
+    },
+    {
+      "id": "5",
+      "nome": "Energia",
+      "slug": "energia"
+    },
+    {
+      "id": "6",
+      "nome": "Imunidade",
+      "slug": "imunidade"
+    },
+    {
+      "id": "7",
+      "nome": "Antioxidante",
+      "slug": "antioxidante"
+    }
   ],
-  
   "$schema": "./node_modules/json-server/schema.json"
 }

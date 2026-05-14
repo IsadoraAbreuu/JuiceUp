@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../components/juice_gradient_background.dart';
 import 'main_nav.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -33,37 +32,61 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: JuiceGradientBackground(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFF15803D), Color(0xFF166534)],
+          ),
+        ),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                height: 110,
-                width: 110,
+                height: 120,
+                width: 120,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(28),
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF1DB954), Color(0xFF06B6D4)],
+                  borderRadius: BorderRadius.circular(32),
+                  color: Colors.white.withValues(alpha: 0.12),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.22),
+                    width: 1.2,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.3),
+                      blurRadius: 24,
+                      offset: const Offset(0, 12),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(18),
+                  child: Image.asset(
+                    'assets/images/logo_juice.png',
+                    fit: BoxFit.contain,
                   ),
                 ),
-                child: const Icon(
-                  Icons.local_drink,
-                  color: Colors.white,
-                  size: 54,
-                ),
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 28),
               Text(
-                'JuiceFlow',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                'JuiceUp',
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      letterSpacing: 0.5,
                     ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               Text(
-                'Natural + Tech para seu dia',
-                style: Theme.of(context).textTheme.bodyLarge,
+                'Explosão natural de sabor.',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Colors.white.withValues(alpha: 0.9),
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.3,
+                    ),
               ),
             ],
           ),

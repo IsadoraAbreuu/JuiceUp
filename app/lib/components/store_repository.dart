@@ -5,6 +5,8 @@ class StoreRepository {
 
   final ApiClient _apiClient;
 
+  String resolveImageUrl(String url) => _apiClient.resolveImageUrl(url);
+
   Future<List<Map<String, dynamic>>> getProducts() async {
     final data = await _apiClient.getList('produtos');
     return data
@@ -25,6 +27,7 @@ class StoreRepository {
     required double price,
     required String imageUrl,
     int? categoryId,
+    String? categoria,
   }) async {
     final response = await _apiClient.post('produtos', {
       'nome': name,
@@ -32,6 +35,7 @@ class StoreRepository {
       'preco': price,
       'imagem': imageUrl,
       'categoriaId': categoryId,
+      if (categoria != null) 'categoria': categoria,
     });
 
     return response;
@@ -45,7 +49,7 @@ class StoreRepository {
     return response;
   }
 
-  Future<void> deleteProduct(int id) {
+  Future<void> deleteProduct(String id) {
     return _apiClient.delete('produtos/$id');
   }
 }

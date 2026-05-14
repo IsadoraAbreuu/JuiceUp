@@ -2,7 +2,7 @@
     "name": "api",
     "version": "1.0.0",
     "scripts": {
-        "start": "json-server --watch db.json --port $PORT --host 0.0.0.0"
+        "start": "json-server --watch db.json --static ./public --port 3000 --cors"
     },
     "dependencies": {
         "json-server": "^0.17.0"

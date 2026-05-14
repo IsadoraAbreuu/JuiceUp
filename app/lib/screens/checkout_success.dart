@@ -37,7 +37,7 @@ class CheckoutSuccessScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                'Seu pedido de sucos naturais foi enviado com sucesso.',
+                'Seu pedido foi enviado com sucesso.',
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),

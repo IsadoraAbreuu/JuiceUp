@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 
 import '../components/cart_controller.dart';
 import '../components/store_repository.dart';
 import '../components/empty_state.dart';
-import '../components/juice_gradient_background.dart';
 import '../components/product_card.dart';
 import 'cart.dart';
 import 'product_detail.dart';
@@ -28,9 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> _products = [];
   List<Map<String, dynamic>> _categories = [];
   int? _selectedCategoryId;
+  String? _selectedCategoryName;
   String _searchQuery = '';
   bool _loading = true;
   String? _error;
+  final ScrollController _categoryScrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _categoryScrollController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -73,11 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
       };
 
   List<Map<String, dynamic>> get _filteredProducts {
-    final filteredByCategory = _selectedCategoryId == null
-        ? _products
-        : _products
-            .where((p) => _toInt(p['categoriaId']) == _selectedCategoryId)
-            .toList();
+    final filteredByCategory = (_selectedCategoryId == null && _selectedCategoryName == null)
+      ? _products
+      : _products.where(_matchesSelectedCategory).toList();
 
     if (_searchQuery.trim().isEmpty) return filteredByCategory;
 
@@ -90,14 +96,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _openProductDetail(Map<String, dynamic> product) async {
-    final categoryId = _toInt(product['categoriaId']);
+    final categoryId = _productCategoryId(product);
     final result = await Navigator.of(context).push(
       MaterialPageRoute<bool>(
         builder: (_) => ProductDetailScreen(
           repository: widget.repository,
           cartController: widget.cartController,
           product: product,
-          categoryName: _categoryMap[categoryId],
+          categoryName: _categoryMap[categoryId] ?? _productCategoryName(product),
         ),
       ),
     );
@@ -110,9 +116,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: JuiceGradientBackground(
-        child: SafeArea(
-          child: Column(
+      body: SafeArea(
+        child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 10),
@@ -148,9 +153,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 44,
                       height: 44,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: const Color(0xFFF3F4F6),
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
+                        border: Border.all(color: const Color(0xFFE5E7EB), width: 1.6),
                       ),
                       child: ClipOval(
                         child: Image.network(
@@ -165,23 +170,47 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: TextField(
-                  onChanged: (value) => setState(() => _searchQuery = value),
-                  decoration: InputDecoration(
-                    hintText: 'Buscar suco...',
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: AnimatedBuilder(
-                      animation: widget.cartController,
-                      builder: (_, __) {
-                        return Badge(
-                          isLabelVisible: widget.cartController.totalItems > 0,
-                          label: Text(widget.cartController.totalItems.toString()),
-                          child: IconButton(
-                            onPressed: () => Navigator.of(context).pushNamed(CartScreen.routeName),
-                            icon: const Icon(Icons.shopping_cart_checkout),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: const Color(0xFFE5E7EB)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.05),
+                        blurRadius: 14,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    onChanged: (value) => setState(() => _searchQuery = value),
+                    decoration: InputDecoration(
+                      hintText: 'Buscar suco...',
+                      hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: const Color(0xFF9CA3AF),
                           ),
-                        );
-                      },
+                      prefixIcon: const Icon(Icons.search, color: Color(0xFF6B7280)),
+                      suffixIcon: AnimatedBuilder(
+                        animation: widget.cartController,
+                        builder: (_, __) {
+                          return Badge(
+                            isLabelVisible: widget.cartController.totalItems > 0,
+                            label: Text(widget.cartController.totalItems.toString()),
+                            child: IconButton(
+                              onPressed: () =>
+                                  Navigator.of(context).pushNamed(CartScreen.routeName),
+                              icon: const Icon(
+                                Icons.shopping_cart_checkout,
+                                color: Color(0xFF111827),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      filled: false,
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
                 ),
@@ -195,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF22C55E), Color(0xFF0EA5E9)],
+                      colors: [Color(0xFF15803D), Color(0xFF166534)],
                     ),
                   ),
                   child: Row(
@@ -237,33 +266,60 @@ class _HomeScreenState extends State<HomeScreen> {
               if (_categories.isNotEmpty)
                 SizedBox(
                   height: 102,
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      _CategoryBubble(
-                        label: 'Todos',
-                        imageUrl: null,
-                        selected: _selectedCategoryId == null,
-                        onTap: () => setState(() => _selectedCategoryId = null),
-                      ),
-                      ..._categories.map(
-                        (category) {
-                          final id = _toInt(category['id']);
-                          final image = _categoryImage(category);
-                          return _CategoryBubble(
-                            label: (category['nome'] ?? '').toString(),
-                            imageUrl: image,
-                            selected: _selectedCategoryId == id,
-                            onTap: () {
-                              setState(() {
-                                _selectedCategoryId = _selectedCategoryId == id ? null : id;
-                              });
-                            },
-                          );
-                        },
-                      ),
-                    ],
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(context).copyWith(
+                      dragDevices: {
+                        PointerDeviceKind.touch,
+                        PointerDeviceKind.mouse,
+                        PointerDeviceKind.trackpad,
+                      },
+                    ),
+                    child: ListView(
+                      controller: _categoryScrollController,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      children: [
+                        _CategoryBubble(
+                          label: 'Todos',
+                          icon: Icons.all_inclusive,
+                          selected: _selectedCategoryId == null && _selectedCategoryName == null,
+                          onTap: () => setState(() {
+                            _selectedCategoryId = null;
+                            _selectedCategoryName = null;
+                          }),
+                        ),
+                        ..._categories.map(
+                          (category) {
+                            final id = _toInt(category['id']);
+                            final name = (category['nome'] ?? category['name'] ?? '')
+                                .toString();
+                            final icon = _getCategoryIcon(name);
+                            return _CategoryBubble(
+                              label: name,
+                              icon: icon,
+                              selected: _selectedCategoryId == id ||
+                                  (_selectedCategoryName != null &&
+                                      _normalize(_selectedCategoryName!) == _normalize(name)),
+                              onTap: () {
+                                setState(() {
+                                  final selectingSame = (_selectedCategoryId == id) ||
+                                      (_selectedCategoryName != null &&
+                                          _normalize(_selectedCategoryName!) == _normalize(name));
+                                  if (selectingSame) {
+                                    _selectedCategoryId = null;
+                                    _selectedCategoryName = null;
+                                  } else {
+                                    _selectedCategoryId = id;
+                                    _selectedCategoryName = name;
+                                  }
+                                });
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               const SizedBox(height: 12),
@@ -312,11 +368,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         itemBuilder: (context, index) {
                           final product = products[index];
-                          final categoryId = _toInt(product['categoriaId']);
+                          final categoryId = _productCategoryId(product);
                           final name = (product['nome'] ?? '').toString();
+                          final resolvedProduct = {
+                            ...product,
+                            'imagem': widget.repository.resolveImageUrl(
+                              (product['imagem'] ?? product['image'] ?? '').toString(),
+                            ),
+                          };
                           return ProductCard(
-                            product: product,
-                            categoryName: _categoryMap[categoryId],
+                            product: resolvedProduct,
+                            categoryName: _categoryMap[categoryId] ?? _productCategoryName(product),
                             onTap: () => _openProductDetail(product),
                             onAddToCart: () {
                               widget.cartController.add(product);
@@ -336,7 +398,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-        ),
       ),
     );
   }
@@ -347,29 +408,78 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String? _categoryImage(Map<String, dynamic> category) {
-    final ownImage = (category['imagem'] ?? category['image'] ?? '').toString();
-    if (ownImage.isNotEmpty) return ownImage;
-
-    final id = _toInt(category['id']);
-    if (id == null) return null;
-
-    final product = _products.where((p) => _toInt(p['categoriaId']) == id).firstOrNull;
-    final productImage = (product?['imagem'] ?? product?['image'] ?? '').toString();
-    if (productImage.isNotEmpty) return productImage;
     return null;
+  }
+
+  bool _matchesSelectedCategory(Map<String, dynamic> product) {
+    final productId = _productCategoryId(product);
+    if (_selectedCategoryId != null && productId == _selectedCategoryId) {
+      return true;
+    }
+
+    if (_selectedCategoryName != null) {
+      final productCategory = _normalize(_productCategoryName(product));
+      final selected = _normalize(_selectedCategoryName!);
+      if (productCategory == selected) {
+        return true;
+      }
+
+      if (_selectedCategoryId != null) {
+        final mappedName = _categoryMap[_selectedCategoryId!];
+        if (mappedName != null && productCategory == _normalize(mappedName)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  int? _productCategoryId(Map<String, dynamic> product) {
+    return _toInt(
+      product['categoriaId'] ??
+          product['categoryId'] ??
+          product['categoria_id'] ??
+          product['categoriaID'],
+    );
+  }
+
+  String _productCategoryName(Map<String, dynamic> product) {
+    return (product['categoriaNome'] ??
+            product['categoria'] ??
+            product['categoryName'] ??
+            product['category'] ??
+            '')
+        .toString();
+  }
+
+  String _normalize(String value) => value.trim().toLowerCase();
+
+  IconData? _getCategoryIcon(String categoryName) {
+    final name = _normalize(categoryName);
+    final iconMap = {
+      'detox': Icons.eco,
+      'vitaminas': Icons.favorite,
+      'refrescante': Icons.ac_unit,
+      'tropical': Icons.nature,
+      'energia': Icons.flash_on,
+      'imunidade': Icons.shield,
+      'antioxidante': Icons.health_and_safety,
+    };
+    return iconMap[name];
   }
 }
 
 class _CategoryBubble extends StatelessWidget {
   const _CategoryBubble({
     required this.label,
-    required this.imageUrl,
+    required this.icon,
     required this.selected,
     required this.onTap,
   });
 
   final String label;
-  final String? imageUrl;
+  final IconData? icon;
   final bool selected;
   final VoidCallback onTap;
 
@@ -389,27 +499,17 @@ class _CategoryBubble extends StatelessWidget {
                 height: 62,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
+                  color: const Color(0xFFF3F4F6),
                   border: Border.all(
-                    color: selected ? const Color(0xFF16A34A) : Colors.transparent,
-                    width: 3,
+                    color: selected ? const Color(0xFF16A34A) : const Color(0xFFE5E7EB),
+                    width: selected ? 3 : 1.6,
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: ClipOval(
-                    child: imageUrl == null
-                        ? Container(
-                            color: Colors.white,
-                            child: const Icon(Icons.local_drink, size: 28),
-                          )
-                        : Image.network(
-                            imageUrl!,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => Container(
-                              color: Colors.white,
-                              child: const Icon(Icons.local_drink, size: 28),
-                            ),
-                          ),
+                child: Center(
+                  child: Icon(
+                    icon ?? Icons.local_drink,
+                    size: 28,
+                    color: const Color(0xFF15803D),
                   ),
                 ),
               ),

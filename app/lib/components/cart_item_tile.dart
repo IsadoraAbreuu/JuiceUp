@@ -18,6 +18,13 @@ class CartItemTile extends StatelessWidget {
 
   String get _name => (item.product['nome'] ?? item.product['name'] ?? '').toString();
   String get _image => (item.product['imagem'] ?? item.product['image'] ?? '').toString();
+  String get _resolvedImage {
+    if (_image.startsWith('/images/')) return 'assets$_image';
+    return _image;
+  }
+
+  bool get _isAssetImage => _resolvedImage.startsWith('assets/');
+
   double get _price {
     final value = item.product['preco'] ?? item.product['price'];
     if (value is num) return value.toDouble();
@@ -27,23 +34,37 @@ class CartItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: EdgeInsets.zero,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+        side: const BorderSide(color: Color(0xFFE5E7EB)),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(14),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                _image,
-                width: 72,
-                height: 72,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(
-                  width: 72,
-                  height: 72,
-                  color: Colors.green.shade50,
-                  child: const Icon(Icons.local_drink),
-                ),
+            Container(
+              width: 78,
+              height: 78,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF3F4F6),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: _isAssetImage
+                    ? Image.asset(
+                        _resolvedImage,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const Icon(Icons.local_drink),
+                      )
+                    : Image.network(
+                        _resolvedImage,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const Icon(Icons.local_drink),
+                      ),
               ),
             ),
             const SizedBox(width: 12),
@@ -53,23 +74,49 @@ class CartItemTile extends StatelessWidget {
                 children: [
                   Text(
                     _name,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
                   ),
                   const SizedBox(height: 4),
-                  Text('R\$ ${_price.toStringAsFixed(2)}'),
-                  const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: onDecrease,
-                        icon: const Icon(Icons.remove_circle_outline),
-                      ),
-                      Text('${item.quantity}'),
-                      IconButton(
-                        onPressed: onIncrease,
-                        icon: const Icon(Icons.add_circle_outline),
-                      ),
-                    ],
+                  Text(
+                    'R\$ ${_price.toStringAsFixed(2)}',
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: Colors.green.shade700,
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF9FAFB),
+                      borderRadius: BorderRadius.circular(999),
+                      border: Border.all(color: const Color(0xFFE5E7EB)),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: onDecrease,
+                          visualDensity: VisualDensity.compact,
+                          icon: const Icon(Icons.remove, size: 18),
+                        ),
+                        Text(
+                          '${item.quantity}',
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                fontWeight: FontWeight.w700,
+                              ),
+                        ),
+                        IconButton(
+                          onPressed: onIncrease,
+                          visualDensity: VisualDensity.compact,
+                          icon: const Icon(Icons.add, size: 18),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -77,13 +124,17 @@ class CartItemTile extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                IconButton(
+                IconButton.filledTonal(
                   onPressed: onRemove,
-                  icon: const Icon(Icons.delete_outline),
+                  icon: const Icon(Icons.delete_outline, size: 20),
+                  color: Colors.red.shade400,
                 ),
+                const SizedBox(height: 8),
                 Text(
                   'R\$ ${item.subtotal.toStringAsFixed(2)}',
-                  style: const TextStyle(fontWeight: FontWeight.w700),
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
                 ),
               ],
             ),

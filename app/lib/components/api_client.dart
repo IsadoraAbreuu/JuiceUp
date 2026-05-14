@@ -21,6 +21,18 @@ class ApiClient {
     return 'http://localhost:3000';
   }
 
+  String resolveImageUrl(String url) {
+    // Se começa com /images/, é uma imagem local
+    if (url.startsWith('/images/')) {
+      // Retorna o caminho do asset
+      return 'assets${url}';
+    }
+    // Se começa com /, tenta servir do servidor
+    if (url.startsWith('/')) return '$baseUrl$url';
+    // URLs completas (https://) passam como está
+    return url;
+  }
+
   Future<List<dynamic>> getList(String path) async {
     final response = await _client.get(Uri.parse('$baseUrl/$path'));
     _ensureSuccess(response);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../components/store_repository.dart';
-import '../components/juice_gradient_background.dart';
 
 class CreateProductScreen extends StatefulWidget {
   const CreateProductScreen({
@@ -26,6 +25,24 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
   final _categoryIdController = TextEditingController();
 
   bool _saving = false;
+  List<Map<String, dynamic>> _categories = [];
+  String? _selectedCategoryId;
+  bool _loadingCategories = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCategories();
+  }
+
+  Future<void> _loadCategories() async {
+    try {
+      final cats = await widget.repository.getCategories();
+      if (mounted) setState(() { _categories = cats; _loadingCategories = false; });
+    } catch (_) {
+      if (mounted) setState(() => _loadingCategories = false);
+    }
+  }
 
   @override
   void dispose() {
@@ -47,7 +64,13 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
         description: _descriptionController.text.trim(),
         price: double.parse(_priceController.text.replaceAll(',', '.')),
         imageUrl: _imageController.text.trim(),
-        categoryId: int.tryParse(_categoryIdController.text.trim()),
+        categoryId: int.tryParse(_selectedCategoryId ?? ''),
+        categoria: _selectedCategoryId == null
+            ? null
+            : _categories.firstWhere(
+                (c) => c['id']?.toString() == _selectedCategoryId,
+                orElse: () => {},
+              )['slug']?.toString(),
       );
 
       if (!mounted) return;
@@ -60,6 +83,7 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
         _priceController.clear();
         _imageController.clear();
         _categoryIdController.clear();
+        setState(() => _selectedCategoryId = null);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Produto criado com sucesso.')),
         );
@@ -83,12 +107,11 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
         title: const Text('Criar produto'),
         centerTitle: true,
       ),
-      body: JuiceGradientBackground(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Form(
-            key: _formKey,
-            child: Column(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
@@ -96,11 +119,11 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
                     gradient: const LinearGradient(
-                      colors: [Color(0xFFE71D36), Color(0xFFEF4444)],
+                      colors: [Color(0xFF15803D), Color(0xFF166534)],
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFE71D36).withValues(alpha: 0.22),
+                        color: const Color(0xFF166534).withValues(alpha: 0.22),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -207,20 +230,32 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                             (value == null || value.trim().isEmpty) ? 'Informe a imagem' : null,
                       ),
                       const SizedBox(height: 12),
-                      TextFormField(
-                        controller: _categoryIdController,
-                        decoration: const InputDecoration(
-                          labelText: 'Categoria ID (opcional)',
-                          prefixIcon: Icon(Icons.category_outlined),
-                        ),
-                        keyboardType: TextInputType.number,
-                      ),
+                      _loadingCategories
+                          ? const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                            )
+                          : DropdownButtonFormField<String>(
+                              value: _selectedCategoryId,
+                              decoration: const InputDecoration(
+                                labelText: 'Categoria (opcional)',
+                                prefixIcon: Icon(Icons.category_outlined),
+                              ),
+                              items: [
+                                const DropdownMenuItem(value: null, child: Text('Sem categoria')),
+                                ..._categories.map((cat) => DropdownMenuItem(
+                                      value: cat['id']?.toString(),
+                                      child: Text(cat['nome']?.toString() ?? ''),
+                                    )),
+                              ],
+                              onChanged: (val) => setState(() => _selectedCategoryId = val),
+                            ),
                       const SizedBox(height: 20),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFE71D36),
+                            backgroundColor: const Color(0xFF166534),
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
@@ -246,7 +281,6 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                 ),
               ],
             ),
-          ),
         ),
       ),
     );

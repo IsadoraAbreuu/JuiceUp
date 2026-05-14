@@ -12,17 +12,17 @@ import 'screens/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const JuiceFlowApp());
+  runApp(const JuiceUpApp());
 }
 
-class JuiceFlowApp extends StatefulWidget {
-  const JuiceFlowApp({super.key});
+class JuiceUpApp extends StatefulWidget {
+  const JuiceUpApp({super.key});
 
   @override
-  State<JuiceFlowApp> createState() => _JuiceFlowAppState();
+  State<JuiceUpApp> createState() => _JuiceUpAppState();
 }
 
-class _JuiceFlowAppState extends State<JuiceFlowApp> {
+class _JuiceUpAppState extends State<JuiceUpApp> {
   late final StoreRepository repository;
   late final CartController cartController;
 
@@ -43,7 +43,7 @@ class _JuiceFlowAppState extends State<JuiceFlowApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'JuiceFlow',
+      title: 'JuiceUp',
       theme: AppTheme.lightTheme,
       routes: {
         MainNavScreen.routeName: (_) => MainNavScreen(

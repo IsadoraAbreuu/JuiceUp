@@ -37,19 +37,33 @@ class ProductCard extends StatelessWidget {
               Expanded(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(14),
-                  child: Image.network(
-                    _image,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) {
-                      return Container(
-                        color: Colors.green.shade50,
-                        child: const Center(
-                          child: Icon(Icons.local_drink, size: 42),
+                  child: _image.startsWith('assets')
+                      ? Image.asset(
+                          _image,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) {
+                            return Container(
+                              color: Colors.green.shade50,
+                              child: const Center(
+                                child: Icon(Icons.local_drink, size: 42),
+                              ),
+                            );
+                          },
+                        )
+                      : Image.network(
+                          _image,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) {
+                            return Container(
+                              color: Colors.green.shade50,
+                              child: const Center(
+                                child: Icon(Icons.local_drink, size: 42),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -61,29 +75,38 @@ class ProductCard extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                'R\$ ${_price.toStringAsFixed(2)}',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Colors.green.shade700,
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
-              if (categoryName != null && categoryName!.isNotEmpty) ...[
-                const SizedBox(height: 4),
-                Text(
-                  categoryName!,
-                  style: Theme.of(context).textTheme.labelMedium,
-                ),
-              ],
               const SizedBox(height: 8),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: onAddToCart,
-                  icon: const Icon(Icons.add_shopping_cart),
-                  label: const Text('Adicionar'),
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'R\$ ${_price.toStringAsFixed(2)}',
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                color: Colors.green.shade700,
+                                fontWeight: FontWeight.w700,
+                              ),
+                        ),
+                        if (categoryName != null && categoryName!.isNotEmpty)
+                          Text(
+                            categoryName!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton.filled(
+                    onPressed: onAddToCart,
+                    icon: const Icon(Icons.add_shopping_cart),
+                    tooltip: 'Adicionar ao carrinho',
+                  ),
+                ],
               ),
             ],
           ),
