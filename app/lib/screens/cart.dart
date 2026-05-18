@@ -12,7 +12,10 @@ class CartScreen extends StatelessWidget {
 
   static const routeName = '/cart';
   final CartController cartController;
+
   void _finishPurchase(BuildContext context) {
+    // em javascript seria algo como:
+    // if (carrinhoVazio) return;
     if (cartController.items.isEmpty) return;
 
     cartController.clear();
