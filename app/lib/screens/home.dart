@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-
 import '../components/cart_controller.dart';
 import '../components/store_repository.dart';
 import '../components/empty_state.dart';
@@ -120,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 10),
+                padding: EdgeInsets.fromLTRB(16, 12, 16, 10),
                 child: Row(
                   children: [
                     Expanded(
@@ -129,39 +128,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Row(
                             children: [
-                              const Icon(Icons.location_on, size: 18),
-                              const SizedBox(width: 4),
-                              Text(
-                                'Entrega em',
-                                style: Theme.of(context).textTheme.labelMedium,
-                              ),
+                              Icon(Icons.location_on, size: 18),
+                              SizedBox(width: 4),
+                              Text('Entrega em',style: Theme.of(context).textTheme.labelMedium),
                             ],
                           ),
-                          const SizedBox(height: 2),
-                          Text(
-                            'Av. Paulista, 1000 - São Paulo',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                          ),
+
+                          SizedBox(height: 2),
+
+                          Text('Av. Paulista, 1001 - São Paulo', maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
                         ],
                       ),
                     ),
-                    Container(
-                      width: 44,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF3F4F6),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: const Color(0xFFE5E7EB), width: 1.6),
-                      ),
+                    Container(width: 44, height: 44, decoration: BoxDecoration(color: Color(0xFFF3F4F6), shape: BoxShape.circle, border: Border.all(color: const Color(0xFFE5E7EB), width: 1.6)),
                       child: ClipOval(
                         child: Image.network(
                           'https://i.pravatar.cc/150?img=12',
                           fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const Icon(Icons.person, size: 22),
+                          errorBuilder: (_, __, ___) => Icon(Icons.person, size: 22),
                         ),
                       ),
                     ),
@@ -169,28 +153,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: const Color(0xFFE5E7EB)),
+                  decoration: BoxDecoration( color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFE5E7EB)),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 14,
-                        offset: const Offset(0, 4),
+                        offset: Offset(0, 4),
                       ),
                     ],
                   ),
-                  child: TextField(
-                    onChanged: (value) => setState(() => _searchQuery = value),
+                  child: TextField( onChanged: (value) => setState(() => _searchQuery = value),
                     decoration: InputDecoration(
                       hintText: 'Buscar suco...',
                       hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: const Color(0xFF9CA3AF),
+                            color: Color(0xFF9CA3AF),
                           ),
-                      prefixIcon: const Icon(Icons.search, color: Color(0xFF6B7280)),
+                      prefixIcon: Icon(Icons.search, color: Color(0xFF6B7280)),
                       suffixIcon: AnimatedBuilder(
                         animation: widget.cartController,
                         builder: (_, __) {
@@ -200,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: IconButton(
                               onPressed: () =>
                                   Navigator.of(context).pushNamed(CartScreen.routeName),
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.shopping_cart_checkout,
                                 color: Color(0xFF111827),
                               ),
@@ -210,62 +190,41 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       filled: false,
                       border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                      contentPadding: EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
+
+              SizedBox(height: 10),
+
+              Padding( padding: EdgeInsets.symmetric(horizontal: 16),child: Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF15803D), Color(0xFF166534)],
-                    ),
-                  ),
+                  padding: EdgeInsets.all(14),
+                  decoration: BoxDecoration( borderRadius: BorderRadius.circular(18), gradient: const LinearGradient( colors: [Color(0xFF15803D), Color(0xFF166534)])),
                   child: Row(
                     children: [
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Combo do Dia',
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Peça 2 sucos e ganhe 10% OFF',
-                              style: Theme.of(
-                                context,
-                              ).textTheme.bodySmall?.copyWith(color: Colors.white),
-                            ),
+                            Text('Combo do Dia', style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white,fontWeight: FontWeight.w700)),
+
+                            SizedBox(height: 4),
+
+                            Text('Peça 2 sucos e ganhe 10% OFF', style: Theme.of(context,).textTheme.bodySmall?.copyWith(color: Colors.white)),
                           ],
                         ),
                       ),
-                      Container(
-                        height: 42,
-                        width: 42,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.22),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(Icons.local_offer, color: Colors.white),
+                      Container( height: 42, width: 42, decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.22),shape: BoxShape.circle,),
+                        child: Icon(Icons.local_offer, color: Colors.white),
                       ),
                     ],
                   ),
                 ),
               ),
               if (_categories.isNotEmpty)
-                SizedBox(
-                  height: 102,
+                SizedBox( height: 102,
                   child: ScrollConfiguration(
                     behavior: ScrollConfiguration.of(context).copyWith(
                       dragDevices: {
@@ -276,9 +235,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: ListView(
                       controller: _categoryScrollController,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
                       scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       children: [
                         _CategoryBubble(
                           label: 'Todos',
@@ -322,12 +281,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-              const SizedBox(height: 12),
+
+              SizedBox(height: 12),
+
               Expanded(
                 child: Builder(
                   builder: (context) {
                     if (_loading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(child: CircularProgressIndicator());
                     }
 
                     if (_error != null) {
@@ -336,10 +297,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(_error!),
-                            const SizedBox(height: 8),
+
+                            SizedBox(height: 8),
+
                             ElevatedButton(
                               onPressed: _loadData,
-                              child: const Text('Tentar novamente'),
+                              child: Text('Tentar novamente'),
                             ),
                           ],
                         ),
@@ -348,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     final products = _filteredProducts;
                     if (products.isEmpty) {
-                      return const EmptyState(
+                      return EmptyState(
                         icon: Icons.local_drink_outlined,
                         title: 'Sem sucos por aqui',
                         message: 'Adicione produtos novos para começar suas vendas.',
@@ -358,9 +321,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     return RefreshIndicator(
                       onRefresh: _loadData,
                       child: GridView.builder(
-                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
                         itemCount: products.length,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 12,
@@ -385,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text('$name adicionado ao carrinho.'),
-                                  duration: const Duration(milliseconds: 900),
+                                  duration: Duration(milliseconds: 900),
                                 ),
                               );
                             },
@@ -494,14 +457,10 @@ class _CategoryBubble extends StatelessWidget {
           width: 74,
           child: Column(
             children: [
-              Container(
-                width: 62,
-                height: 62,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color(0xFFF3F4F6),
+              Container(width: 62,height: 62, decoration: BoxDecoration( shape: BoxShape.circle,
+                  color: Color(0xFFF3F4F6),
                   border: Border.all(
-                    color: selected ? const Color(0xFF16A34A) : const Color(0xFFE5E7EB),
+                    color: selected ?  Color(0xFF16A34A) :  Color(0xFFE5E7EB),
                     width: selected ? 3 : 1.6,
                   ),
                 ),
@@ -513,7 +472,9 @@ class _CategoryBubble extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 4),
+
+              SizedBox(height: 4),
+              
               Text(
                 label,
                 maxLines: 1,

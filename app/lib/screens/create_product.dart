@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../components/store_repository.dart';
 
 class CreateProductScreen extends StatefulWidget {
@@ -104,75 +103,48 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Criar produto'),
+        title: Text('Criar produto'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         child: Form(
           key: _formKey,
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF15803D), Color(0xFF166534)],
-                    ),
+                Container( padding: EdgeInsets.all(18),decoration: BoxDecoration( borderRadius: BorderRadius.circular(24), gradient: const LinearGradient( colors: [Color(0xFF15803D), Color(0xFF166534)]),
                     boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF166534).withValues(alpha: 0.22),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      ),
+                      BoxShadow(color: const Color(0xFF166534).withValues(alpha: 0.22), blurRadius: 20, offset: const Offset(0, 10)),
                     ],
                   ),
                   child: Row(
                     children: [
-                      Container(
-                        width: 54,
-                        height: 54,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.18),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.local_drink,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
-                      const SizedBox(width: 14),
+                      Container(width: 54, height: 54, decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.18), shape: BoxShape.circle,),
+                        child: Icon(Icons.local_drink, color: Colors.white, size: 30)),
+
+                      SizedBox(width: 14),
+
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Novo suco no cardápio',
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'Cadastre um produto com imagem, preço e categoria.',
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Colors.white,
-                                  ),
-                            ),
+                            Text('Novo suco no cardápio', style: Theme.of(context).textTheme.titleMedium?.copyWith( color: Colors.white, fontWeight: FontWeight.w800)),
+
+                            SizedBox(height: 4),
+
+                            Text('Cadastre um produto com imagem, preço e categoria.', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white)),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
+
+                SizedBox(height: 16),
+
+                Container(padding: EdgeInsets.all(16),
+                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
@@ -185,33 +157,22 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                   ),
                   child: Column(
                     children: [
-                      TextFormField(
-                        controller: _nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Nome do produto',
-                          prefixIcon: Icon(Icons.liquor_outlined),
-                        ),
+                      TextFormField(controller: _nameController, decoration: InputDecoration( labelText: 'Nome do produto', prefixIcon: Icon(Icons.liquor_outlined)),
                         validator: (value) =>
                             (value == null || value.trim().isEmpty) ? 'Informe o nome' : null,
                       ),
-                      const SizedBox(height: 12),
-                      TextFormField(
-                        controller: _descriptionController,
-                        decoration: const InputDecoration(
-                          labelText: 'Descrição',
-                          prefixIcon: Icon(Icons.notes_outlined),
-                        ),
+                      
+                      SizedBox(height: 12),
+
+                      TextFormField(controller: _descriptionController, decoration: InputDecoration(labelText: 'Descrição', prefixIcon: Icon(Icons.notes_outlined)),
                         maxLines: 3,
                         validator: (value) =>
                             (value == null || value.trim().isEmpty) ? 'Informe a descrição' : null,
                       ),
-                      const SizedBox(height: 12),
-                      TextFormField(
-                        controller: _priceController,
-                        decoration: const InputDecoration(
-                          labelText: 'Preço',
-                          prefixIcon: Icon(Icons.payments_outlined),
-                        ),
+
+                     SizedBox(height: 12),
+
+                      TextFormField(controller: _priceController, decoration: InputDecoration( labelText: 'Preço',prefixIcon: Icon(Icons.payments_outlined)),
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         validator: (value) {
                           final parsed = double.tryParse((value ?? '').replaceAll(',', '.'));
@@ -219,30 +180,29 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 12),
-                      TextFormField(
-                        controller: _imageController,
-                        decoration: const InputDecoration(
-                          labelText: 'URL da imagem',
-                          prefixIcon: Icon(Icons.image_outlined),
-                        ),
+
+                      SizedBox(height: 12),
+
+                      TextFormField( controller: _imageController,decoration: InputDecoration(labelText: 'URL da imagem',prefixIcon: Icon(Icons.image_outlined)),
                         validator: (value) =>
                             (value == null || value.trim().isEmpty) ? 'Informe a imagem' : null,
                       ),
-                      const SizedBox(height: 12),
+
+                      SizedBox(height: 12),
+
                       _loadingCategories
-                          ? const Padding(
+                          ? Padding(
                               padding: EdgeInsets.symmetric(vertical: 16),
                               child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
                             )
                           : DropdownButtonFormField<String>(
                               value: _selectedCategoryId,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 labelText: 'Categoria (opcional)',
                                 prefixIcon: Icon(Icons.category_outlined),
                               ),
                               items: [
-                                const DropdownMenuItem(value: null, child: Text('Sem categoria')),
+                                DropdownMenuItem(value: null, child: Text('Sem categoria')),
                                 ..._categories.map((cat) => DropdownMenuItem(
                                       value: cat['id']?.toString(),
                                       child: Text(cat['nome']?.toString() ?? ''),
@@ -250,30 +210,23 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                               ],
                               onChanged: (val) => setState(() => _selectedCategoryId = val),
                             ),
-                      const SizedBox(height: 20),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF166534),
+
+                      SizedBox(height: 20),
+
+                      SizedBox(width: double.infinity, child: ElevatedButton.icon(style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF166534),
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            padding: EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18),
                             ),
                           ),
                           onPressed: _saving ? null : _saveProduct,
                           icon: _saving
-                              ? const SizedBox(
-                                  height: 18,
-                                  width: 18,
-                                  child: CircularProgressIndicator(strokeWidth: 2),
+                              ? SizedBox(height: 18, width: 18,child: CircularProgressIndicator(strokeWidth: 2),
                                 )
-                              : const Icon(Icons.save),
-                          label: Text(
-                            _saving ? 'Salvando...' : 'Salvar produto',
-                            style: const TextStyle(fontWeight: FontWeight.w700),
-                          ),
+                              : Icon(Icons.save),
+                          label: Text( _saving ? 'Salvando...' : 'Salvar produto', style: TextStyle(fontWeight: FontWeight.w700)),
                         ),
                       ),
                     ],

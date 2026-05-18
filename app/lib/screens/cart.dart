@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../components/cart_controller.dart';
 import '../components/cart_item_tile.dart';
 import '../components/empty_state.dart';
@@ -12,9 +11,7 @@ class CartScreen extends StatelessWidget {
   });
 
   static const routeName = '/cart';
-
   final CartController cartController;
-
   void _finishPurchase(BuildContext context) {
     if (cartController.items.isEmpty) return;
 
@@ -25,12 +22,12 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Carrinho')),
+      appBar: AppBar(title: Text('Carrinho')),
       body: AnimatedBuilder(
         animation: cartController,
         builder: (_, __) {
           if (cartController.items.isEmpty) {
-            return const EmptyState(
+            return EmptyState(
               icon: Icons.remove_shopping_cart_outlined,
               title: 'Carrinho vazio',
               message: 'Adicione sucos na home para visualizar aqui.',
@@ -41,9 +38,9 @@ class CartScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: ListView.separated(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16),
                   itemCount: cartController.items.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 10),
+                  separatorBuilder: (_, __) => SizedBox(height: 10),
                   itemBuilder: (context, index) {
                     final item = cartController.items[index];
                     return CartItemTile(
@@ -55,33 +52,27 @@ class CartScreen extends StatelessWidget {
                   },
                 ),
               ),
+
               Container(
-                padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-                ),
+                padding: EdgeInsets.fromLTRB(16, 12, 16, 20),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Total'),
-                        Text(
-                          'R\$ ${cartController.totalPrice.toStringAsFixed(2)}',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                fontWeight: FontWeight.w800,
-                              ),
-                        ),
+                        Text('Total'),
+                        Text('R\$ ${cartController.totalPrice.toStringAsFixed(2)}', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
                       ],
                     ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
+
+                    SizedBox(height: 12),
+
+                    SizedBox(width: double.infinity, child: ElevatedButton.icon(
                         onPressed: () => _finishPurchase(context),
-                        icon: const Icon(Icons.payments_outlined),
-                        label: const Text('Finalizar compra'),
+                        icon: Icon(Icons.payments_outlined),
+                        label: Text('Finalizar compra'),
                       ),
                     ),
                   ],

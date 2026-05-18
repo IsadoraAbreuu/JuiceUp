@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../components/cart_controller.dart';
 import '../components/store_repository.dart';
 import 'cart.dart';
@@ -48,16 +47,13 @@ class _MainNavScreenState extends State<MainNavScreen> {
       body: IndexedStack(index: _currentIndex, children: pages),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
-          backgroundColor: const Color(0xFF166534),
+          backgroundColor: Color(0xFF166534),
           indicatorColor: Colors.white.withValues(alpha: 0.22),
           labelTextStyle: WidgetStateProperty.resolveWith((states) {
-            return const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-            );
+            return TextStyle(color: Colors.white, fontWeight: FontWeight.w600);
           }),
           iconTheme: WidgetStateProperty.resolveWith((states) {
-            return const IconThemeData(color: Colors.white);
+            return IconThemeData(color: Colors.white);
           }),
           surfaceTintColor: Colors.transparent,
           elevation: 0,
@@ -65,13 +61,10 @@ class _MainNavScreenState extends State<MainNavScreen> {
         child: NavigationBar(
           selectedIndex: _currentIndex,
           onDestinationSelected: (index) => setState(() => _currentIndex = index),
-          destinations: const [
+          destinations: [
             NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Home'),
             NavigationDestination(icon: Icon(Icons.add_box_outlined), label: 'Novo'),
-            NavigationDestination(
-              icon: Icon(Icons.shopping_cart_outlined),
-              label: 'Carrinho',
-            ),
+            NavigationDestination(icon: Icon(Icons.shopping_cart_outlined), label: 'Carrinho'),
           ],
         ),
       ),

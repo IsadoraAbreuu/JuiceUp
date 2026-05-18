@@ -248,7 +248,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF166534),
+      backgroundColor: Color(0xFF166534),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -257,20 +257,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         automaticallyImplyLeading: false,
         title: null,
         flexibleSpace: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Padding( padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               children: [
                 _floatingButton(
                   icon: Icons.arrow_back,
                   onTap: () => Navigator.of(context).pop(),
                 ),
-                const Spacer(),
+                Spacer(),
                 _floatingButton(
                   icon: Icons.edit_outlined,
                   onTap: () => _editProduct(context),
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 _floatingButton(
                   icon: Icons.delete_outline,
                   onTap: () => _deleteProduct(context),
@@ -283,7 +282,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
       bottomNavigationBar: null,
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -295,7 +294,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(
+              borderRadius: BorderRadius.vertical(
                 bottom: Radius.circular(28),
               ),
               child: AspectRatio(
@@ -306,7 +305,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         fit: BoxFit.cover,
                         errorBuilder: (_, __, ___) => Container(
                           color: Colors.green.shade50,
-                          child: const Icon(Icons.local_drink, size: 66),
+                          child: Icon(Icons.local_drink, size: 66),
                         ),
                       )
                     : Image.network(
@@ -314,16 +313,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         fit: BoxFit.cover,
                         errorBuilder: (_, __, ___) => Container(
                           color: Colors.green.shade50,
-                          child: const Icon(Icons.local_drink, size: 66),
+                          child: Icon(Icons.local_drink, size: 66),
                         ),
                       ),
               ),
             ),
             Transform.translate(
-              offset: const Offset(0, -22),
+              offset: Offset(0, -22),
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                padding: const EdgeInsets.all(16),
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(22),
@@ -331,23 +330,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.08),
                       blurRadius: 18,
-                      offset: const Offset(0, 8),
+                      offset: Offset(0, 8),
                     ),
                   ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      _name,
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w800,
-                          ),
-                    ),
-                    const SizedBox(height: 10),
+                    Text( _name, style: Theme.of(context).textTheme.headlineSmall?.copyWith( fontWeight: FontWeight.w800)),
+
+                    SizedBox(height: 10),
+
                     if (widget.categoryName != null && widget.categoryName!.isNotEmpty)
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                         decoration: BoxDecoration(
                           color: Colors.green.shade50,
                           borderRadius: BorderRadius.circular(999),
@@ -355,41 +351,31 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.local_drink, size: 16),
-                            const SizedBox(width: 6),
-                            Text(
-                              widget.categoryName!,
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
+                            Icon(Icons.local_drink, size: 16),
+
+                            SizedBox(width: 6),
+
+                            Text( widget.categoryName!, style: Theme.of(context).textTheme.labelLarge),
                           ],
                         ),
                       ),
-                    const SizedBox(height: 14),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                    SizedBox(height: 14),
+                    
+                    Row( crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: Text(
-                            'R\$ ${_price.toStringAsFixed(2)}',
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                  color: Colors.green.shade700,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                          ),
+                          child: Text( 'R\$ ${_price.toStringAsFixed(2)}', style: Theme.of(context).textTheme.headlineSmall?.copyWith( color: Colors.green.shade700,fontWeight: FontWeight.w800)),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              'Quantidade',
-                              style: Theme.of(context).textTheme.labelMedium,
+                            Text('Quantidade', style: Theme.of(context).textTheme.labelMedium,
                             ),
-                            const SizedBox(height: 6),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Colors.black12),
-                              ),
+
+                            SizedBox(height: 6),
+
+                            Container( decoration: BoxDecoration( borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.black12)),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -397,16 +383,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     onPressed: _quantity > 1
                                         ? () => setState(() => _quantity--)
                                         : null,
-                                    icon: const Icon(Icons.remove),
+                                    icon: Icon(Icons.remove),
                                   ),
-                                  Text(
-                                    '$_quantity',
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  IconButton(
-                                    onPressed: () => setState(() => _quantity++),
-                                    icon: const Icon(Icons.add),
-                                  ),
+                                  Text( '$_quantity', style: Theme.of(context).textTheme.titleMedium,),
+                                  IconButton( onPressed: () => setState(() => _quantity++), icon: Icon(Icons.add)),
                                 ],
                               ),
                             ),
@@ -415,18 +395,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ],
                     ),
                     const SizedBox(height: 18),
-                    Text(
-                      'Sobre o produto',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      _description,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    const SizedBox(height: 20),
+                    Text( 'Sobre o produto', style: Theme.of(context).textTheme.titleMedium?.copyWith( fontWeight: FontWeight.w700,),),
+
+                    SizedBox(height: 8),
+
+                    Text( _description, style: Theme.of(context).textTheme.bodyLarge),
+
+                    SizedBox(height: 20),
+
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
@@ -435,15 +411,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             widget.cartController.add(widget.product);
                           }
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('$_quantity item(ns) adicionado(s) ao carrinho.'),
+                            SnackBar( content: Text('$_quantity item(ns) adicionado(s) ao carrinho.'),
                             ),
                           );
                         },
-                        icon: const Icon(Icons.add_shopping_cart),
-                        label: const Text('Adicionar ao carrinho'),
+                        icon: Icon(Icons.add_shopping_cart),
+                        label: Text('Adicionar ao carrinho'),
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          padding: EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -454,7 +429,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             ],
           ),
         ),

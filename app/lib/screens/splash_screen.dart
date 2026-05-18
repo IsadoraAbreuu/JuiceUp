@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-
 import 'main_nav.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -33,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -41,12 +39,8 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
         child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                height: 120,
-                width: 120,
+          child: Column( mainAxisSize: MainAxisSize.min,
+            children: [ Container( height: 120, width: 120,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(32),
                   color: Colors.white.withValues(alpha: 0.12),
@@ -55,39 +49,22 @@ class _SplashScreenState extends State<SplashScreen> {
                     width: 1.2,
                   ),
                   boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.3),
-                      blurRadius: 24,
-                      offset: const Offset(0, 12),
-                    ),
+                    BoxShadow( color: Colors.black.withValues(alpha: 0.3), blurRadius: 24, offset: Offset(0, 12),),
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(18),
-                  child: Image.asset(
-                    'assets/images/logo_juice.png',
-                    fit: BoxFit.contain,
-                  ),
+                  padding: EdgeInsets.all(18),
+                  child: Image.asset('assets/images/logo_juice.png', fit: BoxFit.contain,),
                 ),
               ),
-              const SizedBox(height: 28),
-              Text(
-                'JuiceUp',
-                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      color: Colors.white,
-                      letterSpacing: 0.5,
-                    ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'Explosão natural de sabor.',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.white.withValues(alpha: 0.9),
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0.3,
-                    ),
-              ),
+
+              SizedBox(height: 28),
+              
+              Text('JuiceUp',style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w800, color: Colors.white, letterSpacing: 0.5)),
+
+              SizedBox(height: 12),
+
+              Text('Explosão natural de sabor.', style: Theme.of(context).textTheme.titleMedium?.copyWith( color: Colors.white.withValues(alpha: 0.9), fontWeight: FontWeight.w500, letterSpacing: 0.3)),
             ],
           ),
         ),
